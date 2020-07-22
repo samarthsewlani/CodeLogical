@@ -6,9 +6,9 @@
 {% block space %}
 <div class="container">
     <div class="row mypadding justify-content-center">
-        <div class="col-8 w-100">
-            <h4>Login:</h4>
-            <form method="POST">
+        <div class="col-8 w-100 text-center">
+            <h2>Login</h2>
+            <form method="POST" class="text-center">
                 {% csrf_token %}
                 {{ form|crispy  }}
                 <button type="submit" class="btn btn-primary">
@@ -21,8 +21,11 @@
         <h3 class="text-center">Log In with:</h3>
     </p>
     <p class="row">
-        <h3 class="text-center"><a title="Google" class="socialaccount_provider google btn btn-danger text-center" href="/accounts/google/login/?process=login">Google</a></h3>
-        <h3 class="text-center"><a href="/accounts/facebook/login/?process=login" class="btn btn-primary" method="js_sdk" %}">Facebook</a></h3>
+        <h3 class="text-center">
+            <a title="Google" class="socialaccount_provider google btn btn-danger text-center" href="/accounts/google/login/?process=login"><i class="fa fa-google fa-2x" aria-hidden="true"></i></a>
+            <a href="/accounts/facebook/login/?process=login" class="btn btn-primary" method="js_sdk" %}"><i class="fa fa-facebook-square fa-2x" aria-hidden="true"></i></a>
+        </h3>
+        <h3 class="text-center"></h3>
     </p>
     
 </div>

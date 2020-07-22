@@ -9,15 +9,15 @@
         <div class="row">
         <div class="col-sm-12 col-md-10 col-lg-10 col-xl-10">
             <h5 class="card-title">{{ question.title }}</h5>
+            <h6 class="card-subtitle mb-2 text-muted">by <a style="position: relative;" href="{% url 'profile'  question.asked_by.id %}" class="text-decoration-none"><strong>{{ question.asked_by }}</strong></a> </h6>
         </div>
         {% if user == question.asked_by %}
             <div class="col-sm-12 col-md-2 col-lg-2 col-xl-2">
-                <a href="{% url 'question-delete' question.id %}">Delete question</a>
+                <a href="{% url 'question-delete' question.id %}" class="btn btn-sm btn-danger">Delete question</a>
             </div>
         {% endif %}
         </div>
-        <h6 class="card-subtitle mb-2 text-muted">by <a style="position: relative;" href="{% url 'profile'  question.asked_by.id %}" class="text-decoration-none"><strong>{{ question.asked_by }}</strong></a> </h6>
-        <p class="card card-body">{{ question.content|safe }}</p>
+        <div class="card card-body">{{ question.content|safe }}</div>
         <p> <strong>Tags:</strong>
             
             {% for tag in tags %}
@@ -48,7 +48,7 @@
                             {% if user == answer.posted_by %}
                                 <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2">
                                     <p class="card-text"><small class="text-muted">{{ answer.posted_on }}</small></p>
-                                    <a href="{% url 'delete-answer' answer.id %}">Delete answer</a>
+                                    <a href="{% url 'delete-answer' answer.id %}" class="btn btn-sm btn-danger">Delete answer</a>
                                 </div>
                             {% else %}
                             <div class="col-sm-3 col-md-2 col-lg-2 col-xl-2">
@@ -56,10 +56,10 @@
                             </div>
                             {% endif %}
                             <div class="col-sm-2 col-md-1 col-lg-1 col-xl-1">
-                                <a href="{% url 'upvote-answer' answer.id %}" class="btn btn-primary btn-sm">{{ answer.upvotes }}</a>
+                                <a href="{% url 'upvote-answer' answer.id %}" class="btn btn-primary btn-sm"><i class="fa fa-thumbs-up fa-lg" aria-hidden="true"></i> {{ answer.upvotes }}</a>
                             </div>
                             <div class="col-sm-2 col-md-1 col-lg-1 col-xl-1">
-                                <a href="{% url 'downvote-answer' answer.id %}" class="btn btn-danger btn-sm">{{ answer.downvotes }}</a>
+                                <a href="{% url 'downvote-answer' answer.id %}" class="btn btn-danger btn-sm"><i class="fa fa-thumbs-down fa-lg" aria-hidden="true"></i> {{ answer.downvotes }}</a>
                             </div>
                         </div>
                         <p class="card-text">{{ answer.content|safe }}</p>
