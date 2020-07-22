@@ -18,7 +18,7 @@
     <div class="col-sm-12 col-md-8 col-lg-8 pt-3">
         <div class="container">
             <h3>Tags:</h3>
-            <div class="d-flex justify-content-around">
+            <div class="d-flex flex-column justify-content-around">
                 {% for tag in tags %}
                     <div class="p-2 ">
                         <a href="{% url 'tagged-blogs' tag %}" class="btn btn-secondary ">

@@ -1,5 +1,7 @@
 {% extends "blog/base.html" %}
 {% load crispy_forms_tags %}
+{% load socialaccount %}
+{% providers_media_js %}
 
 {% block space %}
 <div class="container">
@@ -15,6 +17,14 @@
             </form>
         </div>
     </div>
+    <p class="row">
+        <h3 class="text-center">Log In with:</h3>
+    </p>
+    <p class="row">
+        <h3 class="text-center"><a title="Google" class="socialaccount_provider google btn btn-danger text-center" href="/accounts/google/login/?process=login">Google</a></h3>
+        <h3 class="text-center"><a href="/accounts/facebook/login/?process=login" class="btn btn-primary" method="js_sdk" %}">Facebook</a></h3>
+    </p>
+    
 </div>
 
 {% endblock %}

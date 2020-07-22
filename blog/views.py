@@ -12,7 +12,7 @@ def home(request):
         query=request.POST['title']
         print(query)
         return redirect('search-result',query)
-    blogs=Blog.objects.all()
+    blogs=Blog.objects.all().order_by('-posted_on')[:5]
     searchform=SearchForm()
     return render(request,'blog/home.html',{'blogs':blogs,'searchform':searchform})
 
@@ -28,7 +28,7 @@ class BlogListView(ListView):
 class BlogCreateView(LoginRequiredMixin,CreateView):
     model = Blog
     template_name = "blog/create_blog.html"
-    fields=["title","content","image","tags"]
+    fields=["title","content","tags"]
     #success_url='/'
 
     def form_valid(self,form):
@@ -59,8 +59,6 @@ class BlogDetailView(DetailView):
         context = super().get_context_data(**kwargs)
         context['tags']=context['object'].tags.all()
         return context
-    
-
 
 
 class BlogDeleteView(DeleteView):

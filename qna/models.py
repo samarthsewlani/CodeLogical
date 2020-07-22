@@ -2,11 +2,12 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.urls import reverse
 from taggit.managers import TaggableManager
-
+from ckeditor.fields import RichTextField
 
 class Question(models.Model):
     title=models.CharField(max_length=100)
-    content=models.TextField()
+    content=RichTextField(default="CONTENT",blank=True,null=True)
+    #content=models.TextField()
     asked_by=models.ForeignKey(User,on_delete=models.CASCADE,null=True,blank=True)
     posted_on=models.DateTimeField(null=True,blank=True)
     tags = TaggableManager()
@@ -20,7 +21,8 @@ class Question(models.Model):
 class Answer(models.Model):
     question=models.ForeignKey(Question,on_delete=models.CASCADE,null=True,blank=True)
     posted_by=models.ForeignKey(User,on_delete=models.CASCADE,null=True,blank=True)
-    content=models.TextField()
+    content=RichTextField(default="CONTENT",blank=True,null=True)
+    # content=models.TextField()
     upvotes=models.IntegerField(default=0)
     downvotes=models.IntegerField(default=0)
     posted_on=models.DateTimeField(null=True,blank=True)

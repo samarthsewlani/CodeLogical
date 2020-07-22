@@ -14,7 +14,7 @@
     </div>
 
 
-    <div class="col-sm-12 col-md-8 col-lg-8 pt-3">
+    <div class="col-sm-12 col-md-8 col-lg-8 pt-3" style="width:auto">
         <h3>Popular Blogs:</h3>
         <div>
             {% for blog in blogs %}
@@ -23,7 +23,7 @@
                         <a href="{% url 'blog-detail' blog.id %}" class="stretched-link"></a>
                         <h5 class="card-title">{{ blog.title }}</h5>
                         <h6 class="card-subtitle mb-2 text-muted">by <a style="position: relative;" href="{% url 'profile'  blog.author.id %}" class="text-decoration-none"><strong>{{ blog.author }}</strong></a> </h6>
-                        <p class="card-text">{{ blog.content }}</p>
+                        <p class="card-text">{{ blog.content|safe|truncatewords:90 }}</p>
                         <p class="card-text"><small class="text-muted">{{ blog.posted_on }}</small></p>
                     </div>
                 </div>

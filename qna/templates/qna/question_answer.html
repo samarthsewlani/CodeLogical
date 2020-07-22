@@ -17,7 +17,7 @@
         {% endif %}
         </div>
         <h6 class="card-subtitle mb-2 text-muted">by <a style="position: relative;" href="{% url 'profile'  question.asked_by.id %}" class="text-decoration-none"><strong>{{ question.asked_by }}</strong></a> </h6>
-        <p class="card card-body">{{ question.content }}</p>
+        <p class="card card-body">{{ question.content|safe }}</p>
         <p> <strong>Tags:</strong>
             
             {% for tag in tags %}
@@ -62,7 +62,7 @@
                                 <a href="{% url 'downvote-answer' answer.id %}" class="btn btn-danger btn-sm">{{ answer.downvotes }}</a>
                             </div>
                         </div>
-                        <p class="card-text">{{ answer.content }}</p>
+                        <p class="card-text">{{ answer.content|safe }}</p>
                     </li>
                 {% endfor %}
                 {% if answers.has_other_pages %}
@@ -103,6 +103,7 @@
         </div>
         <form method="POST" class="text-center mt-3">
             {% csrf_token %}
+            {{ form.media }}
             {{ form|crispy  }}
             <button type="submit" class="btn btn-primary">
                 Submit
