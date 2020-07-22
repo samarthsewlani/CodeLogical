@@ -1,0 +1,17 @@
+{% extends "blog/base.html" %}
+{% load crispy_forms_tags %}
+
+{% block space %}
+<div class="container">
+    <div class="row mypadding justify-content-center">
+        <div class="col-8 w-100">
+            <h4>You have been Logged Out</h4>
+            <p>Want to Log In again??</p>
+            <div>
+                <a href="{% url 'login' %}" class="btn btn-primary">Log In</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

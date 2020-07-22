@@ -1,0 +1,115 @@
+{% extends "blog/base.html" %}
+{% load crispy_forms_tags %}
+
+
+
+{% block content %}
+<div class="card shadow p-3 mb-2 bg-white rounded ">
+    <div class=" card-body">
+        <div class="row">
+        <div class="col-sm-12 col-md-10 col-lg-10 col-xl-10">
+            <h5 class="card-title">{{ question.title }}</h5>
+        </div>
+        {% if user == question.asked_by %}
+            <div class="col-sm-12 col-md-2 col-lg-2 col-xl-2">
+                <a href="{% url 'question-delete' question.id %}">Delete question</a>
+            </div>
+        {% endif %}
+        </div>
+        <h6 class="card-subtitle mb-2 text-muted">by <a style="position: relative;" href="{% url 'profile'  question.asked_by.id %}" class="text-decoration-none"><strong>{{ question.asked_by }}</strong></a> </h6>
+        <p class="card card-body">{{ question.content }}</p>
+        <p> <strong>Tags:</strong>
+            
+            {% for tag in tags %}
+                <span class="badge badge-primary my-2 p-2"> {{ tag }}</span>
+            {% endfor %}
+        </p>
+        <p class="card-text"><small class="text-muted">{{ question.posted_on }}</small></p>
+        <div class="row">
+            <div class="col-sm-12 col-md-10 col-lg-10 col-xl-10">
+                {% if answers %}
+                <h4> Answers:</h4>
+                {% else %}
+                <h4>No answers till now. Be the first one to answer</h4>
+                {% endif %}
+            </div>
+            <div class="col-sm-12 col-md-2 col-lg-2 col-xl-2">
+            </div>
+        </div>
+        
+        <div class="">
+            <ul class="list-group list-group-flush">
+                {% for answer in answers %}
+                    <li class="list-group-item shadow-lg p-3 mb-2 bg-white rounded" style=" background-color: blue;">
+                        <div class="row">
+                            <div class="col-sm-5 col-md-8 col-lg-8 col-xl-8">
+                                <h5 class="card-title">{{ answer.posted_by }}</h5>
+                            </div>
+                            {% if user == answer.posted_by %}
+                                <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2">
+                                    <p class="card-text"><small class="text-muted">{{ answer.posted_on }}</small></p>
+                                    <a href="{% url 'delete-answer' answer.id %}">Delete answer</a>
+                                </div>
+                            {% else %}
+                            <div class="col-sm-3 col-md-2 col-lg-2 col-xl-2">
+                                <p class="card-text"><small class="text-muted">{{ answer.posted_on }}</small></p>
+                            </div>
+                            {% endif %}
+                            <div class="col-sm-2 col-md-1 col-lg-1 col-xl-1">
+                                <a href="{% url 'upvote-answer' answer.id %}" class="btn btn-primary btn-sm">{{ answer.upvotes }}</a>
+                            </div>
+                            <div class="col-sm-2 col-md-1 col-lg-1 col-xl-1">
+                                <a href="{% url 'downvote-answer' answer.id %}" class="btn btn-danger btn-sm">{{ answer.downvotes }}</a>
+                            </div>
+                        </div>
+                        <p class="card-text">{{ answer.content }}</p>
+                    </li>
+                {% endfor %}
+                {% if answers.has_other_pages %}
+                    <ul class="pagination justify-content-center">
+                        {% if answers.has_previous %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page=1"> First</a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ answers.previous_page_number }}"> Previous</a>
+                        </li>
+                        {% endif %}
+            
+                        {% for num in answers.paginator.page_range %}
+                        {% if answers.number == num %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ num }}"> {{ num }}</a>
+                        </li>
+                        {% elif num > answers.number|add:'-3' and num < answers.number|add:'3' %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ num }}"> {{ num }}</a>
+                        </li>
+                        {% endif %}
+
+                        {% endfor %}
+            
+                        {% if answers.has_next %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ answers.next_page_number }}"> Next </a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ answers.paginator.num_pages }}"> Last </a>
+                        </li>
+                        {% endif %}
+                    </ul>
+                {% endif %}
+            </ul>
+        </div>
+        <form method="POST" class="text-center mt-3">
+            {% csrf_token %}
+            {{ form|crispy  }}
+            <button type="submit" class="btn btn-primary">
+                Submit
+            </button>
+        </form>
+    </div>
+    
+</div>
+
+{% endblock %}

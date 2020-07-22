@@ -1,0 +1,54 @@
+{% extends "blog/base.html" %}
+
+{% block content %}
+<div class="card shadow p-3 mb-2 bg-white rounded ">
+    <div class=" card-body">
+        <div class="row">
+        <div class="col-sm-12 col-md-10 col-lg-10 col-xl-10">
+            <h5 class="card-title">{{ question.title }}</h5>
+        </div>
+        {% if user == question.asked_by %}
+            <div class="col-sm-12 col-md-2 col-lg-2 col-xl-2">
+                <a href="{% url 'question-delete' question.id %}">Delete question</a>
+            </div>
+        {% endif %}
+        </div>
+        <h6 class="card-subtitle mb-2 text-muted">by <a style="position: relative;" href="{% url 'profile'  question.asked_by.id %}" class="text-decoration-none"><strong>{{ question.asked_by }}</strong></a> </h6>
+        <p class="card-text">{{ question.content }}</p>
+        <p class="card-text"><small class="text-muted">{{ question.posted_on }}</small></p>
+        <div class="row">
+            <div class="col-sm-12 col-md-10 col-lg-10 col-xl-10">
+                <h4> Answers</h5>
+            </div>
+            <div class="col-sm-12 col-md-2 col-lg-2 col-xl-2">
+                <a href="{% url 'question-answer' question.id %}">ADD</a>
+            </div>
+        </div>
+        
+        <div class="">
+            <ul class="list-group list-group-flush">
+                {% for answer in answers %}
+                    <li class="list-group-item shadow-lg p-3 mb-2 bg-white rounded" style=" background-color: blue;">
+                        <div class="row">
+                            <div class="col-sm-12 col-md-10 col-lg-10 col-xl-10">
+                                <h5 class="card-title">{{ answer.posted_by }}</h5>
+                            </div>
+                            {% if user == answer.posted_by %}
+                                <div class="col-sm-12 col-md-2 col-lg-2 col-xl-2">
+                                    <a href="{% url 'delete-answer' answer.id %}">Delete answer</a>
+                                </div>
+                            {% endif %}
+                        </div>
+                        <p class="card-text">{{ answer.content }}</p>
+                    </li>
+                {% endfor %}
+                
+            </ul>
+        </div>
+        
+        
+    </div>
+    
+</div>
+
+{% endblock %}

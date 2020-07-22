@@ -37,6 +37,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'users.apps.UsersConfig',
+    'blog.apps.BlogConfig',
+    'qna.apps.QnaConfig',
+    'crispy_forms',
+    'taggit',
 ]
 
 MIDDLEWARE = [
@@ -118,3 +123,16 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+
+STATIC_ROOT='/static'
+
+LOGIN_URL = 'login'
+
+LOGIN_REDIRECT_URL = 'home'
+
+MEDIA_ROOT='media/'
+
+MEDIA_URL='media/'
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
