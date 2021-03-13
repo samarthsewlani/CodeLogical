@@ -6,14 +6,15 @@ from django.contrib.auth.mixins import LoginRequiredMixin,UserPassesTestMixin
 from taggit.models import Tag
 from qna.models import Question
 from .forms import SearchForm
+from django.db.models import Q
 
 def home(request):
     if request.POST:
         query=request.POST['title']
         print(query)
         return redirect('search-result',query)
-    blogs=Blog.objects.all().order_by('-posted_on')[:5]
     searchform=SearchForm()
+    blogs=Blog.objects.all().order_by('-posted_on')[:5]
     return render(request,'blog/home.html',{'blogs':blogs,'searchform':searchform})
 
 
@@ -83,11 +84,24 @@ class TagListView(ListView):
     template_name = "blog/tag_list.html"
     context_object_name="tags"
 
+    
+    def get_context_data(self, **kwargs):
+        context = super(TagListView, self).get_context_data(**kwargs)
+        blogs=Blog.objects.all()
+        tags=[]
+        for i in blogs:
+            for j in i.tags.all():
+                tags.append(j)
+        tags=list(set(tags))
+        context["tags"]=tags
+        return context
+    
+
 def searchResult(request,slug):
     blogs,questions=[],[]
     for i in slug.split():
-        b=Blog.objects.filter(title__icontains=i)
-        q=Question.objects.filter(title__icontains=i)
+        b=Blog.objects.filter(Q(title__icontains=i) | Q(content__icontains=i) )
+        q=Question.objects.filter(Q(title__icontains=i) | Q(content__icontains=i))
         blogs.extend(b)
         questions.extend(q)
     blogs=list(set(blogs))[:4]
@@ -108,6 +122,7 @@ class BlogSearchListView(ListView):
         blogs=[]
         for i in slug.split():
             b=Blog.objects.filter(title__icontains=i)
+            blogs.extend(b)
             blogs.extend(b)
         blogs=list(set(blogs))
         context={'blogs':blogs,'slug':slug}

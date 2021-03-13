@@ -158,3 +158,16 @@ class TagListView(ListView):
     model = Tag
     template_name = "qna/tag_list.html"
     context_object_name="tags"
+
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        questions=Question.objects.all()
+        tags=[]
+        for i in questions:
+            for j in i.tags.all():
+                tags.append(j)
+        tags=list(set(tags))
+        context["tags"]=tags
+        return context
+    

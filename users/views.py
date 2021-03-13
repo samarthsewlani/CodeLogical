@@ -26,9 +26,10 @@ def register(request):
 
 class ProfileUpdateView(LoginRequiredMixin,UserPassesTestMixin,UpdateView):
     model=Profile
-    fields=['address','contact','image']
+    fields=['image','location','title','contact']
     success_url='/'                         #Redirect to this URL after successfully updating the model
     template_name='users/profile.html'
+    context_object_name='profile'
 
     def test_func(self):                    #If the profile is of the same user that is logged in
         profile=self.get_object()

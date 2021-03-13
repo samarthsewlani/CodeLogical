@@ -25,7 +25,7 @@ SECRET_KEY = 'tha1)7kv7_wqv1_=haby6*y6$+mf4fei)f!4^_(mj&spw0=w51'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['2c7299a0626b.ngrok.io','localhost','127.0.0.1']
 
 
 # Application definition
@@ -91,11 +91,20 @@ WSGI_APPLICATION = 'codelog.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        }
 }
-
+"""
+DATABASES = {
+    'default': {
+        'ENGINE': 'djongo',
+        'NAME': 'codelogical',
+        
+    }
+    #mongodb+srv://Samarth:<password>@codelogical.09dhy.mongodb.net/<dbname>?retryWrites=true&w=majority
+}
+"""
 AUTHENTICATION_BACKENDS = [
     # Needed to login by username in Django admin, regardless of `allauth`
     'django.contrib.auth.backends.ModelBackend',
@@ -142,15 +151,22 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-STATIC_ROOT='/static'
+STATIC_ROOT='/static/'
+
+STATICFILES_DIRS = (
+    # Put strings here, like "/home/html/static" or "C:/www/django/static".
+    # Always use forward slashes, even on Windows.
+    # Don't forget to use absolute paths, not relative paths.
+    os.path.join(BASE_DIR, 'static'),
+)
 
 LOGIN_URL = 'login'
 
-LOGIN_REDIRECT_URL = 'home'
+LOGIN_REDIRECT_URL = '/'
 
-MEDIA_ROOT='media/'
+MEDIA_URL='/media/'
 
-MEDIA_URL='media/'
+MEDIA_ROOT=os.path.join(BASE_DIR, 'media')
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 

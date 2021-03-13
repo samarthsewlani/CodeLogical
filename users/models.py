@@ -3,10 +3,12 @@ from django.contrib.auth.models import User
 from PIL import Image
 
 class Profile(models.Model):
-    address=models.TextField()
+    #address=models.TextField()
     contact=models.CharField(default="6560377549",max_length=12)
     user=models.OneToOneField(User,on_delete=models.CASCADE)
     image=models.ImageField(default="default.jpg",upload_to='profile-pics')
+    location=models.CharField(blank=True,null=True,max_length=50)
+    title=models.CharField(blank=True,null=True,max_length=50)
 
     def __str__(self):
         return f"{self.user.username} Profile"

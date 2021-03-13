@@ -43,7 +43,7 @@
                     <li class="list-group-item shadow-lg p-3 mb-2 bg-white rounded" style=" background-color: blue;">
                         <div class="row">
                             <div class="col-sm-5 col-md-8 col-lg-8 col-xl-8">
-                                <h5 class="card-title">{{ answer.posted_by }}</h5>
+                                <h5 class="card-title"><a style="position: relative;" href="{% url 'profile'  question.asked_by.id %}" class="text-decoration-none"><strong>{{ answer.posted_by }}</strong></a></h5>
                             </div>
                             {% if user == answer.posted_by %}
                                 <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2">

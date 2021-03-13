@@ -5,14 +5,23 @@
 <div class="container">
     <div class="row mypadding justify-content-center">
         <div class="col-8 w-100">
-            <h4>Profile:</h4>
-            <form method="POST">
-                {% csrf_token %}
-                {{ form|crispy  }}
-                <button type="submit" class="btn btn-primary">
-                    Update
-                </button>
-            </form>
+            <div class="row">
+            
+                <div class="col-lg-9 col-lg-push-3">
+                    <h4>Profile:</h4>
+                    <form method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {{ form|crispy }}
+                        <button type="submit" class="btn btn-primary">
+                            Update
+                        </button>
+                    </form>
+                </div>
+                <div class="col-lg-3 col-lg-pull-9">
+                    <img src="{{ profile.image.url }}" class="img-rounded" alt="{{ object.user.username }}">
+                </div>
+                
+            </div>
         </div>
     </div>
 </div>
